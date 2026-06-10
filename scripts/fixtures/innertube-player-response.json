@@ -1,0 +1,18 @@
+{
+  "captions": {
+    "playerCaptionsTracklistRenderer": {
+      "captionTracks": [
+        {
+          "baseUrl": "https://www.youtube.com/api/timedtext?v=jNQXAC9IVRw&lang=en",
+          "languageCode": "en",
+          "kind": "manual"
+        },
+        {
+          "baseUrl": "https://www.youtube.com/api/timedtext?v=jNQXAC9IVRw&lang=en&kind=asr",
+          "languageCode": "en",
+          "kind": "asr"
+        }
+      ]
+    }
+  }
+}

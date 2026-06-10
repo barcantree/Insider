@@ -1,0 +1,107 @@
+.insider-view {
+	padding: 8px 12px;
+}
+
+.insider-view h4 {
+	margin: 0 0 8px 0;
+}
+
+.insider-view h5 {
+	margin: 12px 0 6px 0;
+	font-size: var(--font-ui-small);
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	color: var(--text-muted);
+}
+
+.insider-section {
+	margin-bottom: 12px;
+	padding-bottom: 12px;
+	border-bottom: 1px solid var(--background-modifier-border);
+}
+
+.insider-status {
+	font-size: var(--font-ui-smaller);
+	color: var(--text-muted);
+	margin-bottom: 10px;
+}
+
+.insider-status span {
+	margin-right: 4px;
+}
+
+.insider-ok {
+	color: var(--text-success);
+}
+
+.insider-warn {
+	color: var(--text-error);
+}
+
+.insider-input,
+.insider-textarea {
+	width: 100%;
+	margin-bottom: 8px;
+	padding: 6px 8px;
+	border-radius: var(--input-radius);
+	border: 1px solid var(--background-modifier-border);
+	background: var(--background-primary);
+	color: var(--text-normal);
+	font-family: inherit;
+	font-size: var(--font-ui-small);
+}
+
+.insider-textarea {
+	resize: vertical;
+	min-height: 48px;
+}
+
+.insider-view button {
+	margin-top: 4px;
+	margin-right: 8px;
+}
+
+.insider-hint {
+	font-size: var(--font-ui-smaller);
+	color: var(--text-faint);
+	margin: 8px 0 0 0;
+}
+
+.insider-toggles .setting-item {
+	border-top: none;
+	padding: 8px;
+	margin-bottom: 6px;
+	border-radius: var(--radius-m);
+	background-color: var(--background-modifier-form-field);
+	border: 1px solid var(--background-modifier-border);
+	box-shadow: 0 1px 0 var(--background-modifier-box-shadow);
+}
+
+.insider-toggles .setting-item-info {
+	padding: 0;
+	margin: 0;
+	min-width: 0;
+	flex: 1 1 55%;
+}
+
+.insider-toggles .setting-item-name {
+	overflow-wrap: anywhere;
+	word-break: break-word;
+	margin: 0;
+	padding: 0;
+}
+
+.insider-toggles .setting-item-description {
+	margin: 4px 0 0 0;
+	padding: 0;
+}
+
+.insider-toggles .setting-item-control {
+	flex-shrink: 0;
+	padding: 0;
+	margin: 0;
+}
+
+.insider-snapshot-section {
+	border-bottom: none;
+}

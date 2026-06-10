@@ -1,0 +1,7 @@
+{
+  "events": [
+    { "tStartMs": 0, "segs": [{ "utf8": "All right, so here we are" }] },
+    { "tStartMs": 2500, "segs": [{ "utf8": "in front of the elephants" }] },
+    { "tStartMs": 5000, "segs": [{ "utf8": "the cool thing about these guys" }] }
+  ]
+}
