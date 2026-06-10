@@ -25,16 +25,12 @@ export default class InsiderPlugin extends Plugin {
 		});
 
 		this.addCommand({
-			id: "open-insider-sidebar",
-			name: "Open Insider sidebar",
+			id: "open-sidebar",
+			name: "Open sidebar",
 			callback: () => { void this.activateView(); },
 		});
 
 		this.addSettingTab(new InsiderSettingTab(this.app, this));
-	}
-
-	onunload(): void {
-		this.app.workspace.detachLeavesOfType(VIEW_TYPE_INSIDER);
 	}
 
 	async loadSettings(): Promise<void> {
@@ -62,6 +58,6 @@ export default class InsiderPlugin extends Plugin {
 			leaf = rightLeaf;
 		}
 
-		workspace.revealLeaf(leaf);
+		await workspace.revealLeaf(leaf);
 	}
 }

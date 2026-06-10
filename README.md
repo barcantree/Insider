@@ -86,4 +86,4 @@ Reload Obsidian (or disable/re-enable the plugin) after rebuilding.
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+See [LICENSE](LICENSE).

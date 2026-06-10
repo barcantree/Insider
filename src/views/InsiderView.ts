@@ -1,4 +1,4 @@
-import { ItemView, Notice, Setting } from "obsidian";
+import { App, ItemView, Modal, Notice, Setting } from "obsidian";
 import type InsiderPlugin from "../main";
 import { estimateSnapshotRefresh, processQuestion, processSource, refreshMemory, shouldShowSnapshotRefresh } from "../engine/pipeline";
 import { listNotes } from "../vault/notes";
@@ -289,7 +289,8 @@ export class InsiderView extends ItemView {
 			new Notice(`Notes to scan: ${count}\n${formatTokenEstimate(estimate)}`, 8000);
 		}
 
-		const confirmed = confirm(
+		const confirmed = await askConfirm(
+			this.app,
 			`Create semantic snapshots for ${notes.length} notes? This calls DeepSeek once per note.`,
 		);
 		if (!confirmed) return;
@@ -316,5 +317,41 @@ export class InsiderView extends ItemView {
 			msg += `\nWarnings: ${result.warnings.slice(0, 3).join("; ")}`;
 		}
 		new Notice(msg, 6000);
+	}
+}
+
+function askConfirm(app: App, message: string): Promise<boolean> {
+	return new Promise((resolve) => {
+		new ConfirmModal(app, message, resolve).open();
+	});
+}
+
+class ConfirmModal extends Modal {
+	constructor(
+		app: App,
+		private message: string,
+		private resolve: (confirmed: boolean) => void,
+	) {
+		super(app);
+	}
+
+	onOpen(): void {
+		const { contentEl } = this;
+		contentEl.createEl("p", { text: this.message });
+		new Setting(contentEl)
+			.addButton((btn) =>
+				btn.setButtonText("Cancel").onClick(() => {
+					this.resolve(false);
+					this.close();
+				}))
+			.addButton((btn) =>
+				btn.setButtonText("Continue").setCta().onClick(() => {
+					this.resolve(true);
+					this.close();
+				}));
+	}
+
+	onClose(): void {
+		this.contentEl.empty();
 	}
 }

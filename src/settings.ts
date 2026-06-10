@@ -13,7 +13,7 @@ export class InsiderSettingTab extends PluginSettingTab {
 	display(): void {
 		const { containerEl } = this;
 		containerEl.empty();
-		containerEl.createEl("h2", { text: "Insider settings" });
+		new Setting(containerEl).setName("Insider settings").setHeading();
 
 		new Setting(containerEl)
 			.setName("DeepSeek API key")
@@ -91,7 +91,7 @@ export class InsiderSettingTab extends PluginSettingTab {
 }
 
 export function mergeSettings(raw: Partial<InsiderSettings> | undefined): InsiderSettings {
-	const base: InsiderSettings = JSON.parse(JSON.stringify(DEFAULT_SETTINGS));
+	const base: InsiderSettings = structuredClone(DEFAULT_SETTINGS);
 	if (!raw) return base;
 	return {
 		...base,

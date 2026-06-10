@@ -63,7 +63,7 @@ var InsiderSettingTab = class extends import_obsidian.PluginSettingTab {
   display() {
     const { containerEl } = this;
     containerEl.empty();
-    containerEl.createEl("h2", { text: "Insider settings" });
+    new import_obsidian.Setting(containerEl).setName("Insider settings").setHeading();
     new import_obsidian.Setting(containerEl).setName("DeepSeek API key").setDesc("Stored locally in your vault's plugin data.").addText(
       (text) => text.setPlaceholder("sk-...").setValue(this.plugin.settings.deepseek_api_key).onChange(async (value) => {
         this.plugin.settings.deepseek_api_key = value;
@@ -105,7 +105,7 @@ var InsiderSettingTab = class extends import_obsidian.PluginSettingTab {
 };
 function mergeSettings(raw) {
   var _a;
-  const base = JSON.parse(JSON.stringify(DEFAULT_SETTINGS));
+  const base = structuredClone(DEFAULT_SETTINGS);
   if (!raw) return base;
   return {
     ...base,
@@ -1941,7 +1941,8 @@ var InsiderView = class extends import_obsidian8.ItemView {
       new import_obsidian8.Notice(`Notes to scan: ${count}
 ${formatTokenEstimate(estimate)}`, 8e3);
     }
-    const confirmed = confirm(
+    const confirmed = await askConfirm(
+      this.app,
       `Create semantic snapshots for ${notes.length} notes? This calls DeepSeek once per note.`
     );
     if (!confirmed) return;
@@ -1970,6 +1971,32 @@ Warnings: ${result.warnings.slice(0, 3).join("; ")}`;
     new import_obsidian8.Notice(msg, 6e3);
   }
 };
+function askConfirm(app, message) {
+  return new Promise((resolve) => {
+    new ConfirmModal(app, message, resolve).open();
+  });
+}
+var ConfirmModal = class extends import_obsidian8.Modal {
+  constructor(app, message, resolve) {
+    super(app);
+    this.message = message;
+    this.resolve = resolve;
+  }
+  onOpen() {
+    const { contentEl } = this;
+    contentEl.createEl("p", { text: this.message });
+    new import_obsidian8.Setting(contentEl).addButton((btn) => btn.setButtonText("Cancel").onClick(() => {
+      this.resolve(false);
+      this.close();
+    })).addButton((btn) => btn.setButtonText("Continue").setCta().onClick(() => {
+      this.resolve(true);
+      this.close();
+    }));
+  }
+  onClose() {
+    this.contentEl.empty();
+  }
+};
 
 // src/main.ts
 var INSIDER_ICON = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5L12 3z"/><path d="M5 19l1 3 1-3 3-1-3-1-1-3-1 3-3 1 3 1z"/><path d="M19 13l.5 1.5 1.5.5-1.5.5-.5 1.5-.5-1.5-1.5-.5 1.5-.5.5-1.5z"/></svg>`;
@@ -1987,16 +2014,13 @@ var InsiderPlugin = class extends import_obsidian9.Plugin {
       void this.activateView();
     });
     this.addCommand({
-      id: "open-insider-sidebar",
-      name: "Open Insider sidebar",
+      id: "open-sidebar",
+      name: "Open sidebar",
       callback: () => {
         void this.activateView();
       }
     });
     this.addSettingTab(new InsiderSettingTab(this.app, this));
-  }
-  onunload() {
-    this.app.workspace.detachLeavesOfType(VIEW_TYPE_INSIDER);
   }
   async loadSettings() {
     var _a;
@@ -2021,6 +2045,6 @@ var InsiderPlugin = class extends import_obsidian9.Plugin {
       await rightLeaf.setViewState({ type: VIEW_TYPE_INSIDER, active: true });
       leaf = rightLeaf;
     }
-    workspace.revealLeaf(leaf);
+    await workspace.revealLeaf(leaf);
   }
 };
