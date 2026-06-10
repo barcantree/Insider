@@ -1,0 +1,9 @@
+{
+	"id": "insider",
+	"name": "Insider",
+	"version": "1.0.0",
+	"minAppVersion": "1.5.0",
+	"description": "An AI tool that turns YouTube videos, web pages, PDFs, and direct questions into structured knowledge notes, then automatically links it to related ideas across your vault.",
+	"author": "barcantree",
+	"isDesktopOnly": true
+}
