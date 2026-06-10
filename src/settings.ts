@@ -13,7 +13,7 @@ export class InsiderSettingTab extends PluginSettingTab {
 	display(): void {
 		const { containerEl } = this;
 		containerEl.empty();
-		new Setting(containerEl).setName("Insider settings").setHeading();
+		new Setting(containerEl).setName("API & output").setHeading();
 
 		new Setting(containerEl)
 			.setName("DeepSeek API key")

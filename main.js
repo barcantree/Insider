@@ -63,7 +63,7 @@ var InsiderSettingTab = class extends import_obsidian.PluginSettingTab {
   display() {
     const { containerEl } = this;
     containerEl.empty();
-    new import_obsidian.Setting(containerEl).setName("Insider settings").setHeading();
+    new import_obsidian.Setting(containerEl).setName("API & output").setHeading();
     new import_obsidian.Setting(containerEl).setName("DeepSeek API key").setDesc("Stored locally in your vault's plugin data.").addText(
       (text) => text.setPlaceholder("sk-...").setValue(this.plugin.settings.deepseek_api_key).onChange(async (value) => {
         this.plugin.settings.deepseek_api_key = value;
